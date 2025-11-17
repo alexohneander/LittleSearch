@@ -1,0 +1,28 @@
+#!/usr/bin/env sh
+set -e
+
+# Find python
+if command -v python >/dev/null 2>&1; then
+  PY=python
+elif command -v python3 >/dev/null 2>&1; then
+  PY=python3
+else
+  echo "Error: Python not found in PATH. Install Python to run black." >&2
+  exit 1
+fi
+
+# Check black is available
+if ! $PY -m black --version >/dev/null 2>&1; then
+  echo "Error: black is not installed in the current Python environment." >&2
+  echo "Install with: $PY -m pip install black" >&2
+  exit 1
+fi
+
+echo "Running: $PY -m black src"
+$PY -m black src || { echo "black failed"; exit 1; }
+
+# Stage any formatted changes so the commit includes them
+git add -A src
+
+echo "Black formatted files (if any) and staged changes."
+exit 0
