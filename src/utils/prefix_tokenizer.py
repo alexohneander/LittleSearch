@@ -23,9 +23,9 @@ class PrefixTokenizer(TokenizerInterface):
 
     def _extract_words(self, text: str) -> List[str]:
         s = (text or "").strip().lower()
-        s = re.sub(r'[^a-z0-9]', ' ', s)
-        s = re.sub(r'\s+', ' ', s)
-        words = [w for w in s.split(' ') if len(w) >= 2]
+        s = re.sub(r"[^a-z0-9]", " ", s)
+        s = re.sub(r"\s+", " ", s)
+        words = [w for w in s.split(" ") if len(w) >= 2]
         return words
 
     def tokenize(self, text: str) -> List[IndexToken]:
@@ -39,7 +39,9 @@ class PrefixTokenizer(TokenizerInterface):
                 prefixes[prefix] = True
 
         # Preserve insertion order by iterating keys (Python 3.7+ dict preserves order)
-        return [IndexToken(name=prefix, weight=self.weight) for prefix in prefixes.keys()]
+        return [
+            IndexToken(name=prefix, weight=self.weight) for prefix in prefixes.keys()
+        ]
 
     def get_weight(self) -> int:
         return self.weight

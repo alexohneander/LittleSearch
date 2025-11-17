@@ -42,6 +42,7 @@ SessionDep = Annotated[Session, Depends(get_session)]
 
 app = FastAPI()
 
+
 @app.on_event("startup")
 def on_startup():
     create_db_and_tables()
@@ -63,7 +64,7 @@ def tokenize_text(text: str = Query(..., min_length=1, max_length=1000)):
 @app.post("/search/tokenize/ngrams")
 def tokenize_ngrams(
     text: str = Query(..., min_length=1, max_length=1000),
-    n: int = Query(3, ge=1, le=10)
+    n: int = Query(3, ge=1, le=10),
 ):
     tokenizer = NGramsTokenizer(ngram_length=n, weight=1)
     tokens = tokenizer.tokenize(text)
@@ -73,7 +74,7 @@ def tokenize_ngrams(
 @app.post("/search/tokenize/prefixes")
 def tokenize_prefixes(
     text: str = Query(..., min_length=1, max_length=1000),
-    min_prefix_length: int = Query(4, ge=1, le=20)
+    min_prefix_length: int = Query(4, ge=1, le=20),
 ):
     tokenizer = PrefixTokenizer(min_prefix_length=min_prefix_length, weight=5)
     tokens = tokenizer.tokenize(text)

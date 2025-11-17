@@ -29,13 +29,13 @@ class WordTokenizer(TokenizerInterface):
         s = text.strip().lower()
 
         # Replace non a-z0-9 with space (mirrors PHP pattern)
-        s = re.sub(r'[^a-z0-9]', ' ', s)
+        s = re.sub(r"[^a-z0-9]", " ", s)
 
         # Collapse multiple whitespace into single space
-        s = re.sub(r'\s+', ' ', s)
+        s = re.sub(r"\s+", " ", s)
 
         # Split into words and filter short ones
-        words = [w for w in s.split(' ') if len(w) >= 2]
+        words = [w for w in s.split(" ") if len(w) >= 2]
 
         # Remove duplicates while preserving order
         seen = set()
@@ -46,7 +46,9 @@ class WordTokenizer(TokenizerInterface):
                 unique_words.append(w)
 
         # Map to IndexToken objects
-        tokens: List[IndexToken] = [IndexToken(name=w, weight=self.weight) for w in unique_words]
+        tokens: List[IndexToken] = [
+            IndexToken(name=w, weight=self.weight) for w in unique_words
+        ]
         return tokens
 
     def get_weight(self) -> int:

@@ -22,9 +22,9 @@ class NGramsTokenizer(TokenizerInterface):
 
     def _extract_words(self, text: str) -> List[str]:
         s = (text or "").strip().lower()
-        s = re.sub(r'[^a-z0-9]', ' ', s)
-        s = re.sub(r'\s+', ' ', s)
-        words = [w for w in s.split(' ') if len(w) >= 2]
+        s = re.sub(r"[^a-z0-9]", " ", s)
+        s = re.sub(r"\s+", " ", s)
+        words = [w for w in s.split(" ") if len(w) >= 2]
         return words
 
     def tokenize(self, text: str) -> List[IndexToken]:
